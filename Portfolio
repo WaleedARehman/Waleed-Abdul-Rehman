@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engr. Waleed | Portfolio & Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+      scroll-behavior: smooth;
+    }
+  
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      animation: fadeInDown 1.5s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.15;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero h1,
+    .hero p {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: 60px 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card {
+      background: #fff;
+      color: #333;
+      transition: 0.3s;
+      border: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card:hover {
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    .list-group-item {
+      background: #f8f9fa;
+      color: #333;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #000;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .btn-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1100;
+      background-color: #000;
+      color: #fff;
+      border: none;
+    }
+
+    .dark-mode {
+      background: #121212;
+      color: #eee;
+    }
+
+    .dark-mode .card {
+      background: #1e1e1e;
+      color: #ddd;
+    }
+
+    .dark-mode .list-group-item {
+      background: #2c2c2c;
+      color: #fff;
+    }
+
+    nav.navbar {
+      background-color: rgba(0, 0, 0, 0.7);
+      transition: background-color 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1050;
+    }
+
+    .dark-mode nav.navbar {
+      background-color: rgba(20, 20, 20, 0.85);
+    }
+
+    nav.navbar .nav-link {
+      color: #fff;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav.navbar .nav-link:hover,
+    nav.navbar .nav-link:focus {
+      color: #99f2c8;
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .section img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Blog cards */
+    .blog-post {
+      margin-bottom: 30px;
+    }
+
+    /* Language toggle styling */
+    .lang-toggle {
+      position: fixed;
+      top: 50px;
+      right: 10px;
+      z-index: 1101;
+      width: 110px;
+    }
+
+    /* Contact form styling */
+    form label {
+      font-weight: 600;
+      color: #222;
+    }
+
+    form input,
+    form textarea {
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      width: 100%;
+      resize: vertical;
+    }
+
+    form button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body onscroll="revealSections()">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Engr. Waleed</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#about" data-lang="en">About Me</a><a class="nav-link d-none"
+              href="#about" data-lang="ur">میرے بارے میں</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills" data-lang="en">Skills</a><a class="nav-link d-none"
+              href="#skills" data-lang="ur">مہارتیں</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects" data-lang="en">Projects</a><a class="nav-link d-none"
+              href="#projects" data-lang="ur">منصوبے</a></li>
+          <li class="nav-item"><a class="nav-link" href="#languages" data-lang="en">Languages</a><a class="nav-link d-none"
+              href="#languages" data-lang="ur">زبانیں</a></li>
+          <li class="nav-item"><a class="nav-link" href="#career" data-lang="en">Career Goals</a><a class="nav-link d-none"
+              href="#career" data-lang="ur">کریئر کے مقاصد</a></li>
+          <li class="nav-item"><a class="nav-link" href="#blog" data-lang="en">Blog</a><a class="nav-link d-none"
+              href="#blog" data-lang="ur">بلاگ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact" data-lang="en">Contact</a><a class="nav-link d-none"
+              href="#contact" data-lang="ur">رابطہ کریں</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dark mode toggle -->
+  <button class="btn btn-sm btn-toggle" onclick="toggleDarkMode()">
+    <i class="fas fa-moon"></i> Toggle Dark Mode
+  </button>
+
+  <!-- Language toggle -->
+  <div class="lang-toggle">
+    <select id="languageSwitcher" class="form-select form-select-sm" aria-label="Language switcher">
+      <option value="en" selected>English</option>
+      <option value="ur">اردو</option>
+    </select>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80"
+      alt="Engineering background" />
+    <h1 data-lang="en">Engr. Waleed Abdul Rehman</h1>
+    <h1 data-lang="ur" class="d-none">انجینئر ولید عبدالرحمن</h1>
+    <p class="lead" data-lang="en">Engineering Student | Part-Time Teacher | Graphic Designer | Future AI Content Creator
+    </p>
+    <p class="lead d-none" data-lang="ur">انجینئرنگ طالب علم | جز وقتی استاد | گرافک ڈیزائنر | مستقبل کے AI مواد بنانے والا</p>
+  </div>
+
+  <div class="container">
+    <!-- About Me -->
+    
+<!-- About Me -->
+<div id="about" class="section d-flex flex-column flex-md-row align-items-center gap-4">
+  <img src="/storage/emulated/0/cn.wps.moffice_eng/images/image-75126a53-47e6-485e-ab73-a46d485ac7d11022082833936564542.jpg"
+       alt="Engr. Waleed Abdul Rehman" 
+       class="rounded shadow" style="max-width: 300px; width: 100%; object-fit: cover;" />
+  <div>
+    <h2 data-lang="en">About Me</h2>
+    <h2 data-lang="ur" class="d-none">میرے بارے میں</h2>
+    <p data-lang="en">I am a Metallurgy and Materials Engineering student at University of the Punjab, Lahore, and a
+      part-time teacher and coordinator at RAAST Academy. Passionate about tech, teaching, and design, I aim to blend
+      science with creativity in everything I do.</p>
+    <p data-lang="ur" class="d-none">میں یونیورسٹی آف دی پنجاب لاہور میں میٹالرجی اور میٹریلز انجینئرنگ کا طالب علم ہوں اور RAAST اکیڈمی میں جز وقتی استاد اور کوآرڈینیٹر ہوں۔ میں ٹیکنالوجی، تعلیم، اور ڈیزائن کے لیے جذبہ رکھتا ہوں اور سائنس کو تخلیقی صلاحیتوں کے ساتھ ملانا چاہتا ہوں۔</p>
+  </div>
+</div>
+    <!-- Skills -->
+    <div id="skills" class="section">
+      <h2 class="text-center" data-lang="en">Professional Skills</h2>
+      <h2 class="text-center d-none" data-lang="ur">پیشہ ورانہ مہارتیں</h2>
+      <div class="row text-center">
+        <div class="col-md-3">
+          <div class="card p-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/3059/3059367.png" alt="Teaching Icon" width="60"
+              height="60" />
+            <h5 data-lang="en">Teaching</h5>
+            <h5 data-lang="ur" class="d-none">تعلیم</h5>
+            <p data-lang="en">2+ years at RAAST Academy, specialized in science subjects with 90%+ student results.</p>
+            <p data-lang="ur" class="d-none">RAAST اکیڈمی میں 2+ سال، 90% سے زائد طلباء کے بہترین نتائج کے ساتھ۔</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card p-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Communication Icon" width="60"
+              height="60" />
+            <h5 data-lang="en">Communication</h5>
+            <h5 data-lang="ur" class="d-none">رابطہ کاری</h5>
+            <p data-lang="en">Fluent in English & Urdu, great at dealing with different types of students and people.</p>
+            <p data-lang="ur" class="d-none">انگریزی اور اردو میں روانی، مختلف طلباء اور لوگوں سے اچھا تعلق۔</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card p-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/906/906175.png" alt="Tech Icon" width="60" height="60" />
+            <h5 data-lang="en">Tech Skills</h5>
+            <h5 data-lang="ur" class="d-none">ٹیکنالوجی کی مہارتیں</h5>
+            <p data-lang="en">MS Word, Excel, PowerPoint, CapCut, Canva AI, Overleaf, and graphic designing tools.</p>
+            <p data-lang="ur" class="d-none">MS Word, Excel, PowerPoint, CapCut, Canva AI, Overleaf، اور گرافک ڈیزائننگ کے آلات۔</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card p-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" alt="Freelancing Icon" width="60" height="60" />
+            <h5 data-lang="en">Freelancing</h5>
+            <h5 data-lang="ur" class="d-none">فری لانسنگ</h5>
+            <p data-lang="en">Certified in SEO, Software Freelancing, and Web Development by BanoQabil.</p>
+            <p data-lang="ur" class="d-none">BanoQabil کے ذریعہ SEO، سافٹ ویئر فری لانسنگ، اور ویب ڈیولپمنٹ میں تصدیق شدہ۔</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div id="projects" class="section text-center">
+      <img src="https://images.unsplash.com/photo-1581093588401-640b4be7e96a?auto=format&fit=crop&w=1350&q=80" alt="Robotics project" />
+      <h2 data-lang="en">Projects & Experience</h2>
+      <h2 data-lang="ur" class="d-none">منصوبے اور تجربہ</h2>
+      <p data-lang="en"><strong>AA Robotics Internship:</strong> Assembled robotic parts and learned electronics for 2 months (2024).</p>
+      <p data-lang="ur" class="d-none"><strong>AA Robotics انٹرنشپ:</strong> 2 ماہ کے لئے روبوٹکس کے پرزے جمع کیے اور الیکٹرانکس سیکھی (2024)۔</p>
+      <p data-lang="en"><strong>RAAST Academy:</strong> Teaching & managing classes, coordinating teachers, and guiding students (2022–Present).</p>
+      <p data-lang="ur" class="d-none"><strong>RAAST اکیڈمی:</strong> تدریس اور کلاسوں کا انتظام، اساتذہ کی کوآرڈینیشن، اور طلباء کی رہنمائی (2022 سے اب تک)۔</p>
+      <p data-lang="en"><strong>Instagram Pages:</strong> <em>Fayza Al Noor</em> (Islamic content), <em>WaleedsWorks</em> (graphic design).</p>
+      <p data-lang="ur" class="d-none"><strong>انسٹاگرام صفحات:</strong> <em>Fayza Al Noor</em> (اسلامی مواد)، <em>WaleedsWorks</em> (گرافک ڈیزائن)۔</p>
+    </div>
+
+    <!-- Languages -->
+    <div id="languages" class="section">
+      <h2 class="text-center" data-lang="en">Languages</h2>
+      <h2 class="text-center d-none" data-lang="ur">زبانیں</h2>
+      <ul class="list-group list-group-flush text-center">
+        <li class="list-group-item" data-lang="en">English – Fluent</li>
+        <li class="list-group-item d-none" data-lang="ur">انگریزی – روانی</li>
+        <li class="list-group-item" data-lang="en">Urdu – Fluent</li>
+        <li class="list-group-item d-none" data-lang="ur">اردو – روانی</li>
+      </ul>
+    </div>
+
+    <!-- Career Goals -->
+    <div id="career" class="section text-center">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80" alt="Career goals" />
+      <h2 data-lang="en">Career Goals</h2>
+      <h2 data-lang="ur" class="d-none">کریئر کے مقاصد</h2>
+      <p data-lang="en">To become an expert in Metallurgy & Materials Engineering, gain international exposure (Türkiye Bursları applicant), and grow a successful AI content creation channel (<strong>The AI 24-7</strong>).</p>
+      <p data-lang="ur" class="d-none">میٹالرجی اور میٹریلز انجینئرنگ میں ماہر بننا، بین الاقوامی تجربہ حاصل کرنا (Türkiye Bursları کے امیدوار)، اور ایک کامیاب AI مواد بنانے والا چینل بڑھانا (<strong>The AI 24-7</strong>)۔</p>
+    </div>
+
+    <!-- Blog Section -->
+    <div id="blog" class="section">
+      <h2 class="text-center" data-lang="en">Blog</h2>
+      <h2 class="text-center d-none" data-lang="ur">بلاگ</h2>
+
+      <div id="blogPosts" class="row">
+        <!-- Blog posts injected by JS -->
+      </div>
+    </div>
+
+    <!-- Social Feeds -->
+   
+<!-- Social Feeds -->
+<div id="social" class="section text-center">
+  <h2 data-lang="en">Social Media</h2>
+  <h2 class="d-none" data-lang="ur">سوشل میڈیا</h2>
+
+  <!-- Instagram Feeds -->
+  <div class="row justify-content-center mb-5">
+    <h5 data-lang="en">Instagram Posts</h5>
+    <h5 class="d-none" data-lang="ur">انسٹاگرام پوسٹس</h5>
+
+    <!-- Post 1 -->
+    <div class="col-md-4 mb-4">
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DLM6ujmIkGW/"
+        data-instgrm-version="14"
+        style="width: 100%; max-width: 540px; margin: auto;"></blockquote>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="col-md-4 mb-4">
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DCcaDCsIG-4/"
+        data-instgrm-version="14"
+        style="width: 100%; max-width: 540px; margin: auto;"></blockquote>
+    </div>
+
+    <!-- Reel -->
+    <div class="col-md-4 mb-4">
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/DFT-ay-IHbq/"
+        data-instgrm-version="14"
+        style="width: 100%; max-width: 540px; margin: auto;"></blockquote>
+    </div>
+  </div>
+
+  <!-- YouTube Videos -->
+  <div class="row justify-content-center">
+    <h5 data-lang="en">YouTube Highlights</h5>
+    <h5 class="d-none" data-lang="ur">یوٹیوب جھلکیاں</h5>
+
+    <!-- Channel 1 -->
+    <div class="col-md-4 mb-4">
+      <h6>MultiChoice68</h6>
+      <iframe width="100%" height="215" src="https://www.youtube.com/embed/Xe20YvMzN1E" frameborder="0"
+        allowfullscreen></iframe>
+      <a href="https://youtube.com/@multichoice68?sub_confirmation=1" target="_blank" class="btn btn-danger mt-2">
+        Subscribe
+      </a>
+    </div>
+
+    <!-- Channel 2 -->
+    <div class="col-md-4 mb-4">
+      <h6>The AI 24-7</h6>
+      <iframe width="100%" height="215" src="https://www.youtube.com/embed/PFN6BrN2E6g" frameborder="0"
+        allowfullscreen></iframe>
+      <a href="https://youtube.com/@theai-24?sub_confirmation=1" target="_blank" class="btn btn-danger mt-2">
+        Subscribe
+      </a>
+    </div>
+
+    <!-- Channel 3 -->
+    <div class="col-md-4 mb-4">
+      <h6>Fayza Al Noor</h6>
+      <iframe width="100%" height="215" src="https://www.youtube.com/embed/c2pph4r5iu8" frameborder="0"
+        allowfullscreen></iframe>
+      <a href="https://youtube.com/@fayza-al-noor?sub_confirmation=1" target="_blank" class="btn btn-danger mt-2">
+        Subscribe
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Instagram SDK Script -->
+<script async src="//www.instagram.com/embed.js"></script>
+ <!-- Portfolio Section -->
+<div id="portfolio" class="section text-center">
+  <h2 data-lang="en">Portfolio</h2>
+  <h2 class="d-none" data-lang="ur">پورٹ فولیو</h2>
+  <p data-lang="en">A categorized showcase of skills in Word, Excel, and PowerPoint for academic and professional work.</p>
+  <p class="d-none" data-lang="ur">ورڈ، ایکسل، اور پاورپوائنٹ میں مہارتوں کا منظم مظاہرہ۔</p>
+
+  <!-- MS Word Projects -->
+  <h3 class="mt-5">MS Word Projects</h3>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/Screenshot_20250624-005154.jpg" alt="Word Report Example" class="img-fluid rounded mb-2">
+        <h5>Cover Page Formatting</h5>
+        <p>Custom-styled ICT lab report cover using headings, alignment tools, and watermark setup.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/Screenshot_20250624-005751.jpg" alt="Word Table Example" class="img-fluid rounded mb-2">
+        <h5>Formatted Tables & Layout</h5>
+        <p>Used MS Word tables, bullet points, and styles to clearly structure lab report content.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/Screenshot_20250624-005815.jpg" alt="Word Graph Example" class="img-fluid rounded mb-2">
+        <h5>Formatted Graphs & Layout</h5>
+        <p>Used MS Word Graphs and styles to give better understanding of data of lab report content.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MS Excel Projects -->
+  <h3 class="mt-5">MS Excel Projects</h3>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/1750709667976.jpg" alt="Excel Grading Sheet" class="img-fluid rounded mb-2">
+        <h5>Grading Sheet</h5>
+        <p>Created an automated grading sheet with formulas, drop-downs, and color coding.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/1750709856689.jpg" alt="Excel Data Dashboard" class="img-fluid rounded mb-2">
+        <h5>Data Dashboard Template</h5>
+        <p>Designed a dynamic dashboard tracking system for sales analysis using Excel formulas and formatting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MS PowerPoint Projects -->
+  <h3 class="mt-5">MS PowerPoint Projects</h3>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/1750712417768.jpg" alt="Infographic Slide" class="img-fluid rounded mb-2">
+        <h5>Animated Infographic Slides</h5>
+        <p>Used transitions and SmartArt to present content creatively during academic presentations.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow h-100">
+        <img src="/storage/emulated/0/Pictures/Screenshot/1750712568942.jpg" alt="Classroom Slides" class="img-fluid rounded mb-2">
+        <img src="/storage/emulated/0/Pictures/Screenshot/1750712578884.jpg" alt="Classroom Slides" class="img-fluid rounded mb-2">
+        <h5>Classroom Presentation</h5>
+        <p>Built lesson slides with visuals, transitions, and diagrams for science class explanations.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="section">
+      <h2 class="text-center" data-lang="en">Contact Me</h2>
+      <h2 class="text-center d-none" data-lang="ur">رابطہ کریں</h2>
+
+      <form id="contactForm" class="mx-auto" style="max-width:600px;">
+        <div class="mb-3">
+          <label for="name" data-lang="en">Name</label>
+          <label for="name" class="d-none" data-lang="ur">نام</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+        <div class="mb-3">
+          <label for="email" data-lang="en">Email</label>
+          <label for="email" class="d-none" data-lang="ur">ای میل</label>
+          <input type="email" class="form-control" id="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="message" data-lang="en">Message</label>
+          <label for="message" class="d-none" data-lang="ur">پیغام</label>
+          <textarea class="form-control" id="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" data-lang="en">Send Message</button>
+        <button type="button" class="btn btn-primary ms-2" onclick="openWhatsApp()" data-lang="en">Chat on WhatsApp</button>
+        <button type="button" class="btn btn-success ms-2 d-none" onclick="openWhatsApp()" data-lang="ur">واٹس ایپ پر چیٹ کریں</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <footer>
+    <p>© 2025 Engr. Waleed Abdul Rehman. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Show sections on scroll
+    function revealSections() {
+      document.querySelectorAll('.section').forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          section.classList.add('visible');
+        }
+      });
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Language toggle
+    const langSwitcher = document.getElementById('languageSwitcher');
+    langSwitcher.addEventListener('change', () => {
+      const lang = langSwitcher.value;
+      document.querySelectorAll('[data-lang]').forEach((el) => {
+        if (el.getAttribute('data-lang') === lang) {
+          el.classList.remove('d-none');
+        } else {
+          el.classList.add('d-none');
+        }
+      });
+    });
+
+    // Contact form submission (basic demo, no backend)
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = e.target.name.value.trim();
+      const email = e.target.email.value.trim();
+      const message = e.target.message.value.trim();
+      if (!name || !email || !message) {
+        alert('Please fill all fields');
+        return;
+      }
+      alert(`Thanks for reaching out, ${name}! I will get back to you soon.`);
+      e.target.reset();
+    });
+
+    // WhatsApp chat link
+    function openWhatsApp() {
+      // Replace the number below with your WhatsApp number with country code, no plus sign
+      const waNumber = "923237245540";
+      const waLink = `https://wa.me/${waNumber}`;
+      window.open(waLink, '_blank');
+    }
+
+    // AI-generated blog posts data
+    const blogPosts = [
+      {
+        title_en: "The Future of Metallurgy: Nano & Advanced Materials",
+        title_ur: "میٹالرجی کا مستقبل: نینو اور جدید مواد",
+        snippet_en: "Exploring how nanotechnology is revolutionizing metallurgy and material engineering for stronger, lighter, and smarter products.",
+        snippet_ur: "یہ جاننے کے لئے کہ نینو ٹیکنالوجی کیسے میٹالرجی اور میٹریلز انجینئرنگ میں انقلاب لا رہی ہے۔"
+      },
+      {
+        title_en: "Effective Teaching Strategies for Science Students",
+        title_ur: "سائنس کے طلباء کے لیے مؤثر تدریسی حکمت عملیاں",
+        snippet_en: "Tips and techniques developed from 2+ years of teaching to maximize student understanding and engagement.",
+        snippet_ur: "دو سال سے زیادہ کی تدریس سے حاصل کردہ بہترین تجاویز اور طریقے۔"
+      },
+      {
+        title_en: "How AI is Changing Content Creation",
+        title_ur: "AI کیسے مواد کی تخلیق کو بدل رہا ہے",
+        snippet_en: "A look at AI-powered tools transforming video editing, design, and online content creation.",
+        snippet_ur: "AI کی مدد سے ویڈیو ایڈیٹنگ، ڈیزائن اور آن لائن مواد کی تخلیق میں ہونے والی تبدیلی۔"
+      }
+    ];
+
+    // Render blog posts
+    const blogContainer = document.getElementById('blogPosts');
+    blogPosts.forEach(post => {
+      const postEl = document.createElement('div');
+      postEl.className = 'col-md-4 blog-post';
+      postEl.innerHTML = `
+        <div class="card p-3">
+          <h5 data-lang="en">${post.title_en}</h5>
+          <h5 class="d-none" data-lang="ur">${post.title_ur}</h5>
+         
+      <p data-lang="en">${post.snippet_en}</p>
+          <p class="d-none" data-lang="ur">${post.snippet_ur}</p>
+        </div>
+      `;
+      blogContainer.appendChild(postEl);
+    });
+    
+    // Initial reveal on load
+    window.addEventListener('load', revealSections);
+  </script>
+<script async src="https://www.instagram.com/embed.js"></script>
+   <script src="https://apis.google.com/js/platform.js"></script>
+    <footer class="text-center py-4">
+  <img src="/storage/emulated/0/Pictures/Canva/ChatGPT_20250623_045958_0000.png" alt="Best AI Badge by Engr. Waleed" style="max-width: 120px;" />
+  <p class="mt-2 mb-0">🏆 Awarded <strong>#1 Best AI</strong> by <em>Engr. Waleed Abdul Rehman</em></p>
+  <p>© 2025 Engr. Waleed Abdul Rehman. All rights reserved.</p>
+</footer>
+</body>
+
+</html>
+
+
+
+
+
+
+
